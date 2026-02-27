@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from "react";
 import Image from "next/image";
 import {
   ChevronDown,
@@ -12,9 +15,12 @@ import {
   Star,
   Plus,
   SlidersHorizontal,
+  X,
 } from "lucide-react";
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen flex flex-col font-sans">
       {/* Header */}
@@ -177,6 +183,12 @@ export default function Home() {
                 <div className="flex items-center gap-1.5"><Bed className="w-3.5 h-3.5" /> 6 beds</div>
                 <div className="flex items-center gap-1.5"><Bath className="w-3.5 h-3.5" /> 2 baths</div>
               </div>
+              <button 
+                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
+                className="mt-4 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
+              >
+                Contact Agent
+              </button>
             </div>
             
             {/* Property Card 2 */}
@@ -195,6 +207,12 @@ export default function Home() {
                 <div className="flex items-center gap-1.5"><Bed className="w-3.5 h-3.5" /> 4 beds</div>
                 <div className="flex items-center gap-1.5"><Bath className="w-3.5 h-3.5" /> 1 bath</div>
               </div>
+              <button 
+                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
+                className="mt-4 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
+              >
+                Contact Agent
+              </button>
             </div>
 
             {/* Property Card 3 */}
@@ -213,6 +231,12 @@ export default function Home() {
                 <div className="flex items-center gap-1.5"><Bed className="w-3.5 h-3.5" /> 6 beds</div>
                 <div className="flex items-center gap-1.5"><Bath className="w-3.5 h-3.5" /> 3 baths</div>
               </div>
+              <button 
+                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
+                className="mt-4 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
+              >
+                Contact Agent
+              </button>
             </div>
 
             {/* Property Card 4 */}
@@ -231,6 +255,12 @@ export default function Home() {
                 <div className="flex items-center gap-1.5"><Bed className="w-3.5 h-3.5" /> 6 beds</div>
                 <div className="flex items-center gap-1.5"><Bath className="w-3.5 h-3.5" /> 3 baths</div>
               </div>
+              <button 
+                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
+                className="mt-4 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
+              >
+                Contact Agent
+              </button>
             </div>
 
             {/* Property Card 5 */}
@@ -249,6 +279,12 @@ export default function Home() {
                 <div className="flex items-center gap-1.5"><Bed className="w-3.5 h-3.5" /> 3 beds</div>
                 <div className="flex items-center gap-1.5"><Bath className="w-3.5 h-3.5" /> 1 bath</div>
               </div>
+              <button 
+                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
+                className="mt-4 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
+              >
+                Contact Agent
+              </button>
             </div>
 
             {/* Property Card 6 */}
@@ -267,6 +303,12 @@ export default function Home() {
                 <div className="flex items-center gap-1.5"><Bed className="w-3.5 h-3.5" /> 6 beds</div>
                 <div className="flex items-center gap-1.5"><Bath className="w-3.5 h-3.5" /> 2 baths</div>
               </div>
+              <button 
+                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
+                className="mt-4 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
+              >
+                Contact Agent
+              </button>
             </div>
           </div>
         </section>
@@ -385,6 +427,12 @@ export default function Home() {
                   <span className="text-sm">@</span>
                 </button>
               </div>
+              <button 
+                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
+                className="mt-3 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
+              >
+                Contact Agent
+              </button>
             </div>
 
             {/* Agent 3 */}
@@ -407,6 +455,12 @@ export default function Home() {
                   <span className="text-sm">@</span>
                 </button>
               </div>
+              <button 
+                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
+                className="mt-3 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
+              >
+                Contact Agent
+              </button>
             </div>
 
             {/* Agent 4 */}
@@ -429,6 +483,12 @@ export default function Home() {
                   <span className="text-sm">@</span>
                 </button>
               </div>
+              <button 
+                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
+                className="mt-3 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
+              >
+                Contact Agent
+              </button>
             </div>
           </div>
         </section>
@@ -694,6 +754,42 @@ export default function Home() {
           <a href="#" className="hover:text-zinc-600 mt-4 md:mt-0">Privacy policy</a>
         </div>
       </footer>
+
+      {/* Contact Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md relative shadow-xl">
+            <button 
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="text-xl font-medium mb-4">Contact Agent</h3>
+            <form className="flex flex-col gap-4">
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 mb-1">Name</label>
+                <input type="text" className="w-full border border-zinc-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900" placeholder="Your name" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 mb-1">Email</label>
+                <input type="email" className="w-full border border-zinc-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900" placeholder="Your email" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 mb-1">Phone</label>
+                <input type="tel" className="w-full border border-zinc-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900" placeholder="Your phone number" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 mb-1">Message</label>
+                <textarea className="w-full border border-zinc-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 min-h-[100px]" placeholder="I'm interested in this property..."></textarea>
+              </div>
+              <button type="button" onClick={() => setIsModalOpen(false)} className="w-full bg-zinc-900 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-zinc-800 transition-colors mt-2">
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
