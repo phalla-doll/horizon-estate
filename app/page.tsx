@@ -16,7 +16,183 @@ import {
   Plus,
   SlidersHorizontal,
   X,
+  Heart,
 } from "lucide-react";
+
+const properties = [
+  {
+    id: 1,
+    title: "Serenity Tower",
+    price: "$340,000",
+    location: "USA/California/Los Angeles",
+    rating: "4.9",
+    area: "300 m²",
+    floors: "1 floor",
+    beds: "6 beds",
+    baths: "2 baths",
+    images: [
+      "https://picsum.photos/seed/prop1/800/600",
+      "https://picsum.photos/seed/prop1b/800/600",
+      "https://picsum.photos/seed/prop1c/800/600",
+    ]
+  },
+  {
+    id: 2,
+    title: "Island Retreat",
+    price: "$220,000",
+    location: "Caribbean/Bahamas/Exuma",
+    rating: "4.8",
+    area: "250 m²",
+    floors: "1 floor",
+    beds: "4 beds",
+    baths: "1 bath",
+    images: [
+      "https://picsum.photos/seed/prop2/800/600",
+      "https://picsum.photos/seed/prop2b/800/600",
+      "https://picsum.photos/seed/prop2c/800/600",
+    ]
+  },
+  {
+    id: 3,
+    title: "Mountain Lodge",
+    price: "$500,000",
+    location: "USA/Colorado/Aspen",
+    rating: "5.0",
+    area: "400 m²",
+    floors: "3 floors",
+    beds: "6 beds",
+    baths: "3 baths",
+    images: [
+      "https://picsum.photos/seed/prop3/800/600",
+      "https://picsum.photos/seed/prop3b/800/600",
+      "https://picsum.photos/seed/prop3c/800/600",
+    ]
+  },
+  {
+    id: 4,
+    title: "Comporta Beach Lux",
+    price: "$296,000",
+    location: "Portugal/Lisbon Coast/Comporta",
+    rating: "4.7",
+    area: "230 m²",
+    floors: "1 floor",
+    beds: "6 beds",
+    baths: "3 baths",
+    images: [
+      "https://picsum.photos/seed/prop4/800/600",
+      "https://picsum.photos/seed/prop4b/800/600",
+      "https://picsum.photos/seed/prop4c/800/600",
+    ]
+  },
+  {
+    id: 5,
+    title: "Tulum Eco Retreat",
+    price: "$450,000",
+    location: "Mexico/Yucatan/Tulum",
+    rating: "4.9",
+    area: "150 m²",
+    floors: "1 floor",
+    beds: "3 beds",
+    baths: "1 bath",
+    images: [
+      "https://picsum.photos/seed/prop5/800/600",
+      "https://picsum.photos/seed/prop5b/800/600",
+      "https://picsum.photos/seed/prop5c/800/600",
+    ]
+  },
+  {
+    id: 6,
+    title: "Azura Villa",
+    price: "$470,000",
+    location: "Greece/Cyclades/Mykonos",
+    rating: "4.8",
+    area: "400 m²",
+    floors: "2 floors",
+    beds: "6 beds",
+    baths: "2 baths",
+    images: [
+      "https://picsum.photos/seed/prop6/800/600",
+      "https://picsum.photos/seed/prop6b/800/600",
+      "https://picsum.photos/seed/prop6c/800/600",
+    ]
+  }
+];
+
+function PropertyCard({ property, onContactClick }: { property: any, onContactClick: () => void }) {
+  const [currentImage, setCurrentImage] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const nextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImage((prev) => (prev + 1) % property.images.length);
+  };
+
+  const prevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImage((prev) => (prev - 1 + property.images.length) % property.images.length);
+  };
+
+  const toggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsFavorite(!isFavorite);
+  };
+
+  return (
+    <div className="group cursor-pointer">
+      <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4">
+        <Image src={property.images[currentImage]} alt={property.title} fill className="object-cover transition-transform duration-500" referrerPolicy="no-referrer" />
+        
+        {/* Carousel Controls */}
+        <div className="absolute inset-0 flex items-center justify-between p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <button onClick={prevImage} className="w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center hover:bg-white text-zinc-900 shadow-sm transition-colors">
+            <ArrowLeft className="w-4 h-4" />
+          </button>
+          <button onClick={nextImage} className="w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center hover:bg-white text-zinc-900 shadow-sm transition-colors">
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Carousel Indicators */}
+        <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5">
+          {property.images.map((_: any, idx: number) => (
+            <div key={idx} className={`w-1.5 h-1.5 rounded-full transition-colors ${idx === currentImage ? 'bg-white' : 'bg-white/50'}`} />
+          ))}
+        </div>
+
+        {/* Favorite Button */}
+        <button onClick={toggleFavorite} className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center hover:bg-white text-zinc-900 shadow-sm transition-colors z-10">
+          <Heart className={`w-4 h-4 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
+        </button>
+      </div>
+
+      <div className="flex justify-between items-start mb-1">
+        <h4 className="font-medium text-lg">{property.title}</h4>
+        <span className="font-medium text-lg">{property.price}</span>
+      </div>
+      
+      <div className="flex justify-between items-center mb-4">
+        <p className="text-zinc-500 text-sm">{property.location}</p>
+        <div className="flex items-center gap-1">
+          <Star className="w-3.5 h-3.5 fill-emerald-500 text-emerald-500" />
+          <span className="text-sm font-medium">{property.rating}</span>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-4 text-xs text-zinc-600">
+        <div className="flex items-center gap-1.5"><Square className="w-3.5 h-3.5" /> {property.area}</div>
+        <div className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> {property.floors}</div>
+        <div className="flex items-center gap-1.5"><Bed className="w-3.5 h-3.5" /> {property.beds}</div>
+        <div className="flex items-center gap-1.5"><Bath className="w-3.5 h-3.5" /> {property.baths}</div>
+      </div>
+      <button 
+        onClick={(e) => { e.stopPropagation(); onContactClick(); }}
+        className="mt-4 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
+      >
+        Contact Agent
+      </button>
+    </div>
+  );
+}
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -167,149 +343,9 @@ export default function Home() {
         <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <h3 className="text-2xl font-medium mb-8">New properties</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Property Card 1 */}
-            <div className="group cursor-pointer">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4">
-                <Image src="https://picsum.photos/seed/prop1/800/600" alt="Serenity Tower" fill className="object-cover group-hover:scale-105 transition-transform duration-500" referrerPolicy="no-referrer" />
-              </div>
-              <div className="flex justify-between items-start mb-1">
-                <h4 className="font-medium text-lg">Serenity Tower</h4>
-                <span className="font-medium text-lg">$340,000</span>
-              </div>
-              <p className="text-zinc-500 text-sm mb-4">USA/California/Los Angeles</p>
-              <div className="flex items-center gap-4 text-xs text-zinc-600">
-                <div className="flex items-center gap-1.5"><Square className="w-3.5 h-3.5" /> 300 m²</div>
-                <div className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> 1 floor</div>
-                <div className="flex items-center gap-1.5"><Bed className="w-3.5 h-3.5" /> 6 beds</div>
-                <div className="flex items-center gap-1.5"><Bath className="w-3.5 h-3.5" /> 2 baths</div>
-              </div>
-              <button 
-                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
-                className="mt-4 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
-              >
-                Contact Agent
-              </button>
-            </div>
-            
-            {/* Property Card 2 */}
-            <div className="group cursor-pointer">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4">
-                <Image src="https://picsum.photos/seed/prop2/800/600" alt="Island Retreat" fill className="object-cover group-hover:scale-105 transition-transform duration-500" referrerPolicy="no-referrer" />
-              </div>
-              <div className="flex justify-between items-start mb-1">
-                <h4 className="font-medium text-lg">Island Retreat</h4>
-                <span className="font-medium text-lg">$220,000</span>
-              </div>
-              <p className="text-zinc-500 text-sm mb-4">Caribbean/Bahamas/Exuma</p>
-              <div className="flex items-center gap-4 text-xs text-zinc-600">
-                <div className="flex items-center gap-1.5"><Square className="w-3.5 h-3.5" /> 250 m²</div>
-                <div className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> 1 floor</div>
-                <div className="flex items-center gap-1.5"><Bed className="w-3.5 h-3.5" /> 4 beds</div>
-                <div className="flex items-center gap-1.5"><Bath className="w-3.5 h-3.5" /> 1 bath</div>
-              </div>
-              <button 
-                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
-                className="mt-4 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
-              >
-                Contact Agent
-              </button>
-            </div>
-
-            {/* Property Card 3 */}
-            <div className="group cursor-pointer">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4">
-                <Image src="https://picsum.photos/seed/prop3/800/600" alt="Mountain Lodge" fill className="object-cover group-hover:scale-105 transition-transform duration-500" referrerPolicy="no-referrer" />
-              </div>
-              <div className="flex justify-between items-start mb-1">
-                <h4 className="font-medium text-lg">Mountain Lodge</h4>
-                <span className="font-medium text-lg">$500,000</span>
-              </div>
-              <p className="text-zinc-500 text-sm mb-4">USA/Colorado/Aspen</p>
-              <div className="flex items-center gap-4 text-xs text-zinc-600">
-                <div className="flex items-center gap-1.5"><Square className="w-3.5 h-3.5" /> 400 m²</div>
-                <div className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> 3 floors</div>
-                <div className="flex items-center gap-1.5"><Bed className="w-3.5 h-3.5" /> 6 beds</div>
-                <div className="flex items-center gap-1.5"><Bath className="w-3.5 h-3.5" /> 3 baths</div>
-              </div>
-              <button 
-                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
-                className="mt-4 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
-              >
-                Contact Agent
-              </button>
-            </div>
-
-            {/* Property Card 4 */}
-            <div className="group cursor-pointer">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4">
-                <Image src="https://picsum.photos/seed/prop4/800/600" alt="Comporta Beach Lux" fill className="object-cover group-hover:scale-105 transition-transform duration-500" referrerPolicy="no-referrer" />
-              </div>
-              <div className="flex justify-between items-start mb-1">
-                <h4 className="font-medium text-lg">Comporta Beach Lux</h4>
-                <span className="font-medium text-lg">$296,000</span>
-              </div>
-              <p className="text-zinc-500 text-sm mb-4">Portugal/Lisbon Coast/Comporta</p>
-              <div className="flex items-center gap-4 text-xs text-zinc-600">
-                <div className="flex items-center gap-1.5"><Square className="w-3.5 h-3.5" /> 230 m²</div>
-                <div className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> 1 floor</div>
-                <div className="flex items-center gap-1.5"><Bed className="w-3.5 h-3.5" /> 6 beds</div>
-                <div className="flex items-center gap-1.5"><Bath className="w-3.5 h-3.5" /> 3 baths</div>
-              </div>
-              <button 
-                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
-                className="mt-4 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
-              >
-                Contact Agent
-              </button>
-            </div>
-
-            {/* Property Card 5 */}
-            <div className="group cursor-pointer">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4">
-                <Image src="https://picsum.photos/seed/prop5/800/600" alt="Tulum Eco Retreat" fill className="object-cover group-hover:scale-105 transition-transform duration-500" referrerPolicy="no-referrer" />
-              </div>
-              <div className="flex justify-between items-start mb-1">
-                <h4 className="font-medium text-lg">Tulum Eco Retreat</h4>
-                <span className="font-medium text-lg">$450,000</span>
-              </div>
-              <p className="text-zinc-500 text-sm mb-4">Mexico/Yucatan/Tulum</p>
-              <div className="flex items-center gap-4 text-xs text-zinc-600">
-                <div className="flex items-center gap-1.5"><Square className="w-3.5 h-3.5" /> 150 m²</div>
-                <div className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> 1 floor</div>
-                <div className="flex items-center gap-1.5"><Bed className="w-3.5 h-3.5" /> 3 beds</div>
-                <div className="flex items-center gap-1.5"><Bath className="w-3.5 h-3.5" /> 1 bath</div>
-              </div>
-              <button 
-                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
-                className="mt-4 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
-              >
-                Contact Agent
-              </button>
-            </div>
-
-            {/* Property Card 6 */}
-            <div className="group cursor-pointer">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4">
-                <Image src="https://picsum.photos/seed/prop6/800/600" alt="Azura Villa" fill className="object-cover group-hover:scale-105 transition-transform duration-500" referrerPolicy="no-referrer" />
-              </div>
-              <div className="flex justify-between items-start mb-1">
-                <h4 className="font-medium text-lg">Azura Villa</h4>
-                <span className="font-medium text-lg">$470,000</span>
-              </div>
-              <p className="text-zinc-500 text-sm mb-4">Greece/Cyclades/Mykonos</p>
-              <div className="flex items-center gap-4 text-xs text-zinc-600">
-                <div className="flex items-center gap-1.5"><Square className="w-3.5 h-3.5" /> 400 m²</div>
-                <div className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> 2 floors</div>
-                <div className="flex items-center gap-1.5"><Bed className="w-3.5 h-3.5" /> 6 beds</div>
-                <div className="flex items-center gap-1.5"><Bath className="w-3.5 h-3.5" /> 2 baths</div>
-              </div>
-              <button 
-                onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
-                className="mt-4 w-full border border-zinc-200 text-zinc-900 py-2 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
-              >
-                Contact Agent
-              </button>
-            </div>
+            {properties.map(property => (
+              <PropertyCard key={property.id} property={property} onContactClick={() => setIsModalOpen(true)} />
+            ))}
           </div>
         </section>
 
