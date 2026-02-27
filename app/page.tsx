@@ -277,7 +277,7 @@ const properties = [
   }
 ];
 
-function PropertyCard({ property, onContactClick }: { property: any, onContactClick: () => void }) {
+function PropertyCard({ property, onContactClick, isCompared, onCompareToggle }: { property: any, onContactClick: () => void, isCompared: boolean, onCompareToggle: () => void }) {
   const [currentImage, setCurrentImage] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -322,6 +322,19 @@ function PropertyCard({ property, onContactClick }: { property: any, onContactCl
         <button onClick={toggleFavorite} className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center hover:bg-white text-zinc-900 shadow-sm transition-colors z-10">
           <Heart className={`w-4 h-4 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
         </button>
+
+        {/* Compare Checkbox */}
+        <label 
+          className="absolute top-3 left-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center hover:bg-white text-zinc-900 shadow-sm transition-colors z-10 cursor-pointer"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <input 
+            type="checkbox" 
+            checked={isCompared}
+            onChange={onCompareToggle}
+            className="w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 cursor-pointer"
+          />
+        </label>
       </div>
 
       <div className="flex justify-between items-start mb-1">
@@ -357,6 +370,21 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortBy, setSortBy] = useState("default");
   const [activeFilter, setActiveFilter] = useState("Buy");
+  const [selectedForComparison, setSelectedForComparison] = useState<number[]>([]);
+  const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
+
+  const toggleCompare = (id: number) => {
+    setSelectedForComparison(prev => {
+      if (prev.includes(id)) {
+        return prev.filter(pId => pId !== id);
+      }
+      if (prev.length >= 4) {
+        alert("You can compare up to 4 properties at a time.");
+        return prev;
+      }
+      return [...prev, id];
+    });
+  };
 
   const filteredProperties = properties.filter(p => p.type === activeFilter);
 
@@ -559,7 +587,13 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {sortedProperties.map(property => (
-              <PropertyCard key={property.id} property={property} onContactClick={() => setIsModalOpen(true)} />
+              <PropertyCard 
+                key={property.id} 
+                property={property} 
+                onContactClick={() => setIsModalOpen(true)} 
+                isCompared={selectedForComparison.includes(property.id)}
+                onCompareToggle={() => toggleCompare(property.id)}
+              />
             ))}
           </div>
         </section>
@@ -1038,6 +1072,130 @@ export default function Home() {
                 Send Message
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Compare Modal */}
+      {isCompareModalOpen && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl w-full max-w-6xl p-6 md:p-8 relative my-8">
+            <button 
+              onClick={() => setIsCompareModalOpen(false)}
+              className="absolute right-6 top-6 text-zinc-400 hover:text-zinc-900 transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            
+            <h2 className="text-2xl font-medium mb-8">Compare Properties</h2>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[800px] text-left border-collapse">
+                <thead>
+                  <tr>
+                    <th className="p-4 border-b border-zinc-200 w-1/5">Feature</th>
+                    {selectedForComparison.map(id => {
+                      const prop = properties.find(p => p.id === id);
+                      return (
+                        <th key={id} className="p-4 border-b border-zinc-200 w-1/5 align-top">
+                          <div className="relative aspect-[4/3] rounded-lg overflow-hidden mb-3">
+                            <Image src={prop?.images[0] || ''} alt={prop?.title || ''} fill className="object-cover" referrerPolicy="no-referrer" />
+                            <button 
+                              onClick={() => toggleCompare(id)}
+                              className="absolute top-2 right-2 w-6 h-6 bg-white/80 rounded-full flex items-center justify-center hover:bg-white text-zinc-900"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </div>
+                          <h4 className="font-medium text-lg">{prop?.title}</h4>
+                          <p className="text-zinc-500 text-sm font-normal">{prop?.location}</p>
+                        </th>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody className="text-sm">
+                  <tr>
+                    <td className="p-4 border-b border-zinc-100 font-medium text-zinc-500">Price</td>
+                    {selectedForComparison.map(id => (
+                      <td key={id} className="p-4 border-b border-zinc-100 font-medium text-lg">{properties.find(p => p.id === id)?.price}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="p-4 border-b border-zinc-100 font-medium text-zinc-500">Rating</td>
+                    {selectedForComparison.map(id => (
+                      <td key={id} className="p-4 border-b border-zinc-100">
+                        <div className="flex items-center gap-1">
+                          <Star className="w-4 h-4 fill-emerald-500 text-emerald-500" />
+                          <span className="font-medium">{properties.find(p => p.id === id)?.rating}</span>
+                        </div>
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="p-4 border-b border-zinc-100 font-medium text-zinc-500">Area</td>
+                    {selectedForComparison.map(id => (
+                      <td key={id} className="p-4 border-b border-zinc-100">{properties.find(p => p.id === id)?.area}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="p-4 border-b border-zinc-100 font-medium text-zinc-500">Bedrooms</td>
+                    {selectedForComparison.map(id => (
+                      <td key={id} className="p-4 border-b border-zinc-100">{properties.find(p => p.id === id)?.beds}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="p-4 border-b border-zinc-100 font-medium text-zinc-500">Bathrooms</td>
+                    {selectedForComparison.map(id => (
+                      <td key={id} className="p-4 border-b border-zinc-100">{properties.find(p => p.id === id)?.baths}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="p-4 border-b border-zinc-100 font-medium text-zinc-500">Floors</td>
+                    {selectedForComparison.map(id => (
+                      <td key={id} className="p-4 border-b border-zinc-100">{properties.find(p => p.id === id)?.floors}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="p-4 border-b border-zinc-100 font-medium text-zinc-500">Type</td>
+                    {selectedForComparison.map(id => (
+                      <td key={id} className="p-4 border-b border-zinc-100">{properties.find(p => p.id === id)?.type}</td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            {selectedForComparison.length === 0 && (
+              <div className="text-center py-12 text-zinc-500">
+                No properties selected for comparison.
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Floating Compare Bar */}
+      {selectedForComparison.length > 0 && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-zinc-900 text-white px-6 py-4 rounded-full shadow-2xl z-40 flex items-center gap-6 animate-in slide-in-from-bottom-10 fade-in duration-300">
+          <div className="flex items-center gap-2">
+            <span className="bg-white/20 w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium">
+              {selectedForComparison.length}
+            </span>
+            <span className="text-sm font-medium">properties selected</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={() => setIsCompareModalOpen(true)}
+              className="bg-white text-zinc-900 px-4 py-2 rounded-full text-sm font-medium hover:bg-zinc-100 transition-colors"
+            >
+              Compare
+            </button>
+            <button 
+              onClick={() => setSelectedForComparison([])}
+              className="text-zinc-400 hover:text-white transition-colors p-2"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
         </div>
       )}
