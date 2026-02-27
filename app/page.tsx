@@ -121,6 +121,108 @@ const properties = [
       "https://picsum.photos/seed/prop6b/800/600",
       "https://picsum.photos/seed/prop6c/800/600",
     ]
+  },
+  {
+    id: 7,
+    title: "Urban Loft",
+    price: "$180,000",
+    location: "USA/New York/Brooklyn",
+    rating: "4.6",
+    area: "120 m²",
+    floors: "1 floor",
+    beds: "2 beds",
+    baths: "1 bath",
+    type: "Buy",
+    images: [
+      "https://picsum.photos/seed/prop7/800/600",
+      "https://picsum.photos/seed/prop7b/800/600",
+      "https://picsum.photos/seed/prop7c/800/600",
+    ]
+  },
+  {
+    id: 8,
+    title: "Seaside Mansion",
+    price: "$1,200,000",
+    location: "Spain/Ibiza",
+    rating: "5.0",
+    area: "800 m²",
+    floors: "3 floors",
+    beds: "8 beds",
+    baths: "5 baths",
+    type: "Buy",
+    images: [
+      "https://picsum.photos/seed/prop8/800/600",
+      "https://picsum.photos/seed/prop8b/800/600",
+      "https://picsum.photos/seed/prop8c/800/600",
+    ]
+  },
+  {
+    id: 9,
+    title: "Downtown Office Space",
+    price: "$850,000",
+    location: "UK/London/City",
+    rating: "4.5",
+    area: "500 m²",
+    floors: "1 floor",
+    beds: "0 beds",
+    baths: "4 baths",
+    type: "Commercial properties",
+    images: [
+      "https://picsum.photos/seed/prop9/800/600",
+      "https://picsum.photos/seed/prop9b/800/600",
+      "https://picsum.photos/seed/prop9c/800/600",
+    ]
+  },
+  {
+    id: 10,
+    title: "Modern Penthouse",
+    price: "$950,000",
+    location: "UAE/Dubai/Marina",
+    rating: "4.9",
+    area: "350 m²",
+    floors: "2 floors",
+    beds: "4 beds",
+    baths: "4 baths",
+    type: "New developments",
+    images: [
+      "https://picsum.photos/seed/prop10/800/600",
+      "https://picsum.photos/seed/prop10b/800/600",
+      "https://picsum.photos/seed/prop10c/800/600",
+    ]
+  },
+  {
+    id: 11,
+    title: "Cozy Cabin",
+    price: "$150,000",
+    location: "Canada/BC/Whistler",
+    rating: "4.7",
+    area: "90 m²",
+    floors: "1 floor",
+    beds: "2 beds",
+    baths: "1 bath",
+    type: "Rent",
+    images: [
+      "https://picsum.photos/seed/prop11/800/600",
+      "https://picsum.photos/seed/prop11b/800/600",
+      "https://picsum.photos/seed/prop11c/800/600",
+    ]
+  },
+  {
+    id: 12,
+    title: "Tech Hub Workspace",
+    price: "$2,100,000",
+    location: "USA/California/San Francisco",
+    rating: "4.8",
+    area: "1200 m²",
+    floors: "2 floors",
+    beds: "0 beds",
+    baths: "8 baths",
+    type: "Commercial properties",
+    images: [
+      "https://picsum.photos/seed/prop12/800/600",
+      "https://picsum.photos/seed/prop12b/800/600",
+      "https://picsum.photos/seed/prop12c/800/600",
+    ]
   }
 ];
 
