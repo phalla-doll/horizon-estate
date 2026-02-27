@@ -413,6 +413,14 @@ export default function Home() {
   const [selectedForComparison, setSelectedForComparison] = useState<number[]>([]);
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
 
+  // Filter states
+  const [filterCountry, setFilterCountry] = useState("All countries");
+  const [filterPropertyType, setFilterPropertyType] = useState("All types");
+  const [filterPriceRange, setFilterPriceRange] = useState("All prices");
+  const [filterSize, setFilterSize] = useState("All sizes (m²)");
+  const [filterBedrooms, setFilterBedrooms] = useState("Bedrooms");
+  const [filterBathrooms, setFilterBathrooms] = useState("Bathrooms");
+
   const toggleCompare = (id: number) => {
     setSelectedForComparison(prev => {
       if (prev.includes(id)) {
@@ -426,7 +434,47 @@ export default function Home() {
     });
   };
 
-  const filteredProperties = properties.filter(p => p.type === activeFilter);
+  const filteredProperties = properties.filter(p => {
+    // Type filter
+    if (p.type !== activeFilter) return false;
+
+    // Country filter
+    if (filterCountry !== "All countries" && !p.location.includes(filterCountry)) return false;
+
+    // Bedrooms filter
+    if (filterBedrooms !== "Bedrooms") {
+      const minBeds = parseInt(filterBedrooms.replace("+", ""));
+      const pBeds = parseInt(p.beds.replace(/[^0-9]/g, "")) || 0;
+      if (pBeds < minBeds) return false;
+    }
+
+    // Bathrooms filter
+    if (filterBathrooms !== "Bathrooms") {
+      const minBaths = parseInt(filterBathrooms.replace("+", ""));
+      const pBaths = parseInt(p.baths.replace(/[^0-9]/g, "")) || 0;
+      if (pBaths < minBaths) return false;
+    }
+
+    // Price range filter
+    if (filterPriceRange !== "All prices") {
+      const pPrice = parseInt(p.price.replace(/[^0-9]/g, ""));
+      if (filterPriceRange === "Under $200,000" && pPrice >= 200000) return false;
+      if (filterPriceRange === "$200,000 - $500,000" && (pPrice < 200000 || pPrice > 500000)) return false;
+      if (filterPriceRange === "$500,000 - $1,000,000" && (pPrice < 500000 || pPrice > 1000000)) return false;
+      if (filterPriceRange === "Over $1,000,000" && pPrice <= 1000000) return false;
+    }
+
+    // Size filter
+    if (filterSize !== "All sizes (m²)") {
+      const pSize = parseInt(p.area.replace(/[^0-9]/g, ""));
+      if (filterSize === "Under 100 m²" && pSize >= 100) return false;
+      if (filterSize === "100 - 300 m²" && (pSize < 100 || pSize > 300)) return false;
+      if (filterSize === "300 - 500 m²" && (pSize < 300 || pSize > 500)) return false;
+      if (filterSize === "Over 500 m²" && pSize <= 500) return false;
+    }
+
+    return true;
+  });
 
   const sortedProperties = [...filteredProperties].sort((a, b) => {
     if (sortBy === "price-asc") {
@@ -545,31 +593,75 @@ export default function Home() {
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 mb-4">
               <div className="relative">
-                <select className="w-full appearance-none border border-zinc-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900">
+                <select 
+                  value={filterCountry}
+                  onChange={(e) => setFilterCountry(e.target.value)}
+                  className="w-full appearance-none border border-zinc-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900"
+                >
                   <option>All countries</option>
+                  <option>USA</option>
+                  <option>Caribbean</option>
+                  <option>Portugal</option>
+                  <option>Mexico</option>
+                  <option>Greece</option>
+                  <option>Spain</option>
+                  <option>UK</option>
+                  <option>UAE</option>
+                  <option>Canada</option>
+                  <option>France</option>
+                  <option>Italy</option>
+                  <option>Singapore</option>
                 </select>
                 <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
               </div>
               <div className="relative">
-                <select className="w-full appearance-none border border-zinc-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900">
-                  <option>New property</option>
+                <select 
+                  value={filterPropertyType}
+                  onChange={(e) => setFilterPropertyType(e.target.value)}
+                  className="w-full appearance-none border border-zinc-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900"
+                >
+                  <option>All types</option>
+                  <option>House</option>
+                  <option>Apartment</option>
+                  <option>Villa</option>
+                  <option>Office</option>
                 </select>
                 <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
               </div>
               <div className="relative">
-                <select className="w-full appearance-none border border-zinc-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900">
-                  <option>$280,000 - $500,000</option>
+                <select 
+                  value={filterPriceRange}
+                  onChange={(e) => setFilterPriceRange(e.target.value)}
+                  className="w-full appearance-none border border-zinc-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900"
+                >
+                  <option>All prices</option>
+                  <option>Under $200,000</option>
+                  <option>$200,000 - $500,000</option>
+                  <option>$500,000 - $1,000,000</option>
+                  <option>Over $1,000,000</option>
                 </select>
                 <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
               </div>
               <div className="relative">
-                <select className="w-full appearance-none border border-zinc-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900">
+                <select 
+                  value={filterSize}
+                  onChange={(e) => setFilterSize(e.target.value)}
+                  className="w-full appearance-none border border-zinc-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900"
+                >
                   <option>All sizes (m²)</option>
+                  <option>Under 100 m²</option>
+                  <option>100 - 300 m²</option>
+                  <option>300 - 500 m²</option>
+                  <option>Over 500 m²</option>
                 </select>
                 <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
               </div>
               <div className="relative">
-                <select className="w-full appearance-none border border-zinc-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900">
+                <select 
+                  value={filterBedrooms}
+                  onChange={(e) => setFilterBedrooms(e.target.value)}
+                  className="w-full appearance-none border border-zinc-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900"
+                >
                   <option>Bedrooms</option>
                   <option>1+</option>
                   <option>2+</option>
@@ -580,7 +672,11 @@ export default function Home() {
                 <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
               </div>
               <div className="relative">
-                <select className="w-full appearance-none border border-zinc-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900">
+                <select 
+                  value={filterBathrooms}
+                  onChange={(e) => setFilterBathrooms(e.target.value)}
+                  className="w-full appearance-none border border-zinc-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900"
+                >
                   <option>Bathrooms</option>
                   <option>1+</option>
                   <option>2+</option>
@@ -596,11 +692,18 @@ export default function Home() {
                 <Plus className="w-4 h-4" /> More options
               </button>
               <div className="flex items-center gap-4">
-                <button className="flex items-center gap-2 text-sm font-medium text-zinc-600 hover:text-zinc-900">
+                <button 
+                  onClick={() => {
+                    setFilterCountry("All countries");
+                    setFilterPropertyType("All types");
+                    setFilterPriceRange("All prices");
+                    setFilterSize("All sizes (m²)");
+                    setFilterBedrooms("Bedrooms");
+                    setFilterBathrooms("Bathrooms");
+                  }}
+                  className="flex items-center gap-2 text-sm font-medium text-zinc-600 hover:text-zinc-900"
+                >
                   <SlidersHorizontal className="w-4 h-4" /> Clear filters
-                </button>
-                <button className="bg-zinc-900 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-zinc-800 transition-colors">
-                  Show properties
                 </button>
               </div>
             </div>
