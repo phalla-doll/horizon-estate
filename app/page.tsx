@@ -30,6 +30,7 @@ const properties = [
     floors: "1 floor",
     beds: "6 beds",
     baths: "2 baths",
+    type: "Buy",
     images: [
       "https://picsum.photos/seed/prop1/800/600",
       "https://picsum.photos/seed/prop1b/800/600",
@@ -46,6 +47,7 @@ const properties = [
     floors: "1 floor",
     beds: "4 beds",
     baths: "1 bath",
+    type: "Rent",
     images: [
       "https://picsum.photos/seed/prop2/800/600",
       "https://picsum.photos/seed/prop2b/800/600",
@@ -62,6 +64,7 @@ const properties = [
     floors: "3 floors",
     beds: "6 beds",
     baths: "3 baths",
+    type: "Buy",
     images: [
       "https://picsum.photos/seed/prop3/800/600",
       "https://picsum.photos/seed/prop3b/800/600",
@@ -78,6 +81,7 @@ const properties = [
     floors: "1 floor",
     beds: "6 beds",
     baths: "3 baths",
+    type: "New developments",
     images: [
       "https://picsum.photos/seed/prop4/800/600",
       "https://picsum.photos/seed/prop4b/800/600",
@@ -94,6 +98,7 @@ const properties = [
     floors: "1 floor",
     beds: "3 beds",
     baths: "1 bath",
+    type: "Rent",
     images: [
       "https://picsum.photos/seed/prop5/800/600",
       "https://picsum.photos/seed/prop5b/800/600",
@@ -110,6 +115,7 @@ const properties = [
     floors: "2 floors",
     beds: "6 beds",
     baths: "2 baths",
+    type: "Commercial properties",
     images: [
       "https://picsum.photos/seed/prop6/800/600",
       "https://picsum.photos/seed/prop6b/800/600",
@@ -197,8 +203,11 @@ function PropertyCard({ property, onContactClick }: { property: any, onContactCl
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortBy, setSortBy] = useState("default");
+  const [activeFilter, setActiveFilter] = useState("Buy");
 
-  const sortedProperties = [...properties].sort((a, b) => {
+  const filteredProperties = properties.filter(p => p.type === activeFilter);
+
+  const sortedProperties = [...filteredProperties].sort((a, b) => {
     if (sortBy === "price-asc") {
       const priceA = parseInt(a.price.replace(/[^0-9]/g, ""));
       const priceB = parseInt(b.price.replace(/[^0-9]/g, ""));
@@ -287,10 +296,30 @@ export default function Home() {
 
           <div className="bg-white border border-zinc-200 rounded-2xl p-4 shadow-sm">
             <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
-              <button className="px-6 py-2 rounded-full border border-zinc-200 text-sm font-medium bg-zinc-50">Buy</button>
-              <button className="px-6 py-2 rounded-full text-sm font-medium text-zinc-500 hover:bg-zinc-50">Rent</button>
-              <button className="px-6 py-2 rounded-full text-sm font-medium text-zinc-500 hover:bg-zinc-50 whitespace-nowrap">New developments</button>
-              <button className="px-6 py-2 rounded-full text-sm font-medium text-zinc-500 hover:bg-zinc-50 whitespace-nowrap">Commercial properties</button>
+              <button 
+                onClick={() => setActiveFilter("Buy")}
+                className={`px-6 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${activeFilter === "Buy" ? "border border-zinc-200 bg-zinc-50 text-zinc-900" : "text-zinc-500 hover:bg-zinc-50"}`}
+              >
+                Buy
+              </button>
+              <button 
+                onClick={() => setActiveFilter("Rent")}
+                className={`px-6 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${activeFilter === "Rent" ? "border border-zinc-200 bg-zinc-50 text-zinc-900" : "text-zinc-500 hover:bg-zinc-50"}`}
+              >
+                Rent
+              </button>
+              <button 
+                onClick={() => setActiveFilter("New developments")}
+                className={`px-6 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${activeFilter === "New developments" ? "border border-zinc-200 bg-zinc-50 text-zinc-900" : "text-zinc-500 hover:bg-zinc-50"}`}
+              >
+                New developments
+              </button>
+              <button 
+                onClick={() => setActiveFilter("Commercial properties")}
+                className={`px-6 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${activeFilter === "Commercial properties" ? "border border-zinc-200 bg-zinc-50 text-zinc-900" : "text-zinc-500 hover:bg-zinc-50"}`}
+              >
+                Commercial properties
+              </button>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 mb-4">
