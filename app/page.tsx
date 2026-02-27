@@ -223,6 +223,57 @@ const properties = [
       "https://picsum.photos/seed/prop12b/800/600",
       "https://picsum.photos/seed/prop12c/800/600",
     ]
+  },
+  {
+    id: 13,
+    title: "Historic Townhouse",
+    price: "$890,000",
+    location: "France/Paris/Le Marais",
+    rating: "4.9",
+    area: "180 m²",
+    floors: "3 floors",
+    beds: "4 beds",
+    baths: "2 baths",
+    type: "Buy",
+    images: [
+      "https://picsum.photos/seed/prop13/800/600",
+      "https://picsum.photos/seed/prop13b/800/600",
+      "https://picsum.photos/seed/prop13c/800/600",
+    ]
+  },
+  {
+    id: 14,
+    title: "Lakefront Estate",
+    price: "$1,450,000",
+    location: "Italy/Lombardy/Lake Como",
+    rating: "5.0",
+    area: "600 m²",
+    floors: "2 floors",
+    beds: "5 beds",
+    baths: "4 baths",
+    type: "Buy",
+    images: [
+      "https://picsum.photos/seed/prop14/800/600",
+      "https://picsum.photos/seed/prop14b/800/600",
+      "https://picsum.photos/seed/prop14c/800/600",
+    ]
+  },
+  {
+    id: 15,
+    title: "Skyline Residences",
+    price: "$720,000",
+    location: "Singapore/Marina Bay",
+    rating: "4.8",
+    area: "140 m²",
+    floors: "1 floor",
+    beds: "3 beds",
+    baths: "2 baths",
+    type: "New developments",
+    images: [
+      "https://picsum.photos/seed/prop15/800/600",
+      "https://picsum.photos/seed/prop15b/800/600",
+      "https://picsum.photos/seed/prop15c/800/600",
+    ]
   }
 ];
 
