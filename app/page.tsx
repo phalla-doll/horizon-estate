@@ -26,6 +26,7 @@ const properties = [
     price: "$340,000",
     location: "USA/California/Los Angeles",
     rating: "4.9",
+    reviewCount: 128,
     area: "300 m²",
     floors: "1 floor",
     beds: "6 beds",
@@ -43,6 +44,7 @@ const properties = [
     price: "$220,000",
     location: "Caribbean/Bahamas/Exuma",
     rating: "4.8",
+    reviewCount: 85,
     area: "250 m²",
     floors: "1 floor",
     beds: "4 beds",
@@ -60,6 +62,7 @@ const properties = [
     price: "$500,000",
     location: "USA/Colorado/Aspen",
     rating: "5.0",
+    reviewCount: 210,
     area: "400 m²",
     floors: "3 floors",
     beds: "6 beds",
@@ -77,6 +80,7 @@ const properties = [
     price: "$296,000",
     location: "Portugal/Lisbon Coast/Comporta",
     rating: "4.7",
+    reviewCount: 56,
     area: "230 m²",
     floors: "1 floor",
     beds: "6 beds",
@@ -94,6 +98,7 @@ const properties = [
     price: "$450,000",
     location: "Mexico/Yucatan/Tulum",
     rating: "4.9",
+    reviewCount: 142,
     area: "150 m²",
     floors: "1 floor",
     beds: "3 beds",
@@ -111,6 +116,7 @@ const properties = [
     price: "$470,000",
     location: "Greece/Cyclades/Mykonos",
     rating: "4.8",
+    reviewCount: 93,
     area: "400 m²",
     floors: "2 floors",
     beds: "6 beds",
@@ -128,6 +134,7 @@ const properties = [
     price: "$180,000",
     location: "USA/New York/Brooklyn",
     rating: "4.6",
+    reviewCount: 204,
     area: "120 m²",
     floors: "1 floor",
     beds: "2 beds",
@@ -145,6 +152,7 @@ const properties = [
     price: "$1,200,000",
     location: "Spain/Ibiza",
     rating: "5.0",
+    reviewCount: 315,
     area: "800 m²",
     floors: "3 floors",
     beds: "8 beds",
@@ -162,6 +170,7 @@ const properties = [
     price: "$850,000",
     location: "UK/London/City",
     rating: "4.5",
+    reviewCount: 42,
     area: "500 m²",
     floors: "1 floor",
     beds: "0 beds",
@@ -179,6 +188,7 @@ const properties = [
     price: "$950,000",
     location: "UAE/Dubai/Marina",
     rating: "4.9",
+    reviewCount: 178,
     area: "350 m²",
     floors: "2 floors",
     beds: "4 beds",
@@ -196,6 +206,7 @@ const properties = [
     price: "$150,000",
     location: "Canada/BC/Whistler",
     rating: "4.7",
+    reviewCount: 112,
     area: "90 m²",
     floors: "1 floor",
     beds: "2 beds",
@@ -213,6 +224,7 @@ const properties = [
     price: "$2,100,000",
     location: "USA/California/San Francisco",
     rating: "4.8",
+    reviewCount: 67,
     area: "1200 m²",
     floors: "2 floors",
     beds: "0 beds",
@@ -230,6 +242,7 @@ const properties = [
     price: "$890,000",
     location: "France/Paris/Le Marais",
     rating: "4.9",
+    reviewCount: 234,
     area: "180 m²",
     floors: "3 floors",
     beds: "4 beds",
@@ -247,6 +260,7 @@ const properties = [
     price: "$1,450,000",
     location: "Italy/Lombardy/Lake Como",
     rating: "5.0",
+    reviewCount: 89,
     area: "600 m²",
     floors: "2 floors",
     beds: "5 beds",
@@ -264,6 +278,7 @@ const properties = [
     price: "$720,000",
     location: "Singapore/Marina Bay",
     rating: "4.8",
+    reviewCount: 156,
     area: "140 m²",
     floors: "1 floor",
     beds: "3 beds",
@@ -347,14 +362,39 @@ function PropertyCard({ property, onContactClick, isCompared, onCompareToggle }:
         <div className="flex items-center gap-1">
           <Star className="w-3.5 h-3.5 fill-emerald-500 text-emerald-500" />
           <span className="text-sm font-medium">{property.rating}</span>
+          <span className="text-xs text-zinc-400 ml-1">({property.reviewCount})</span>
         </div>
       </div>
 
       <div className="flex items-center gap-4 text-xs text-zinc-600">
-        <div className="flex items-center gap-1.5"><Square className="w-3.5 h-3.5" /> {property.area}</div>
-        <div className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> {property.floors}</div>
-        <div className="flex items-center gap-1.5"><Bed className="w-3.5 h-3.5" /> {property.beds}</div>
-        <div className="flex items-center gap-1.5"><Bath className="w-3.5 h-3.5" /> {property.baths}</div>
+        <div className="flex items-center gap-1.5 relative group/tooltip">
+          <Square className="w-3.5 h-3.5" /> 
+          <span>{property.area}</span>
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-zinc-900 text-white text-[10px] rounded opacity-0 group-hover/tooltip:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">
+            Square meters
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 relative group/tooltip">
+          <MapPin className="w-3.5 h-3.5" /> 
+          <span>{property.floors}</span>
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-zinc-900 text-white text-[10px] rounded opacity-0 group-hover/tooltip:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">
+            Floors
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 relative group/tooltip">
+          <Bed className="w-3.5 h-3.5" /> 
+          <span>{property.beds}</span>
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-zinc-900 text-white text-[10px] rounded opacity-0 group-hover/tooltip:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">
+            Bedrooms
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 relative group/tooltip">
+          <Bath className="w-3.5 h-3.5" /> 
+          <span>{property.baths}</span>
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-zinc-900 text-white text-[10px] rounded opacity-0 group-hover/tooltip:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">
+            Bathrooms
+          </div>
+        </div>
       </div>
       <button 
         onClick={(e) => { e.stopPropagation(); onContactClick(); }}
