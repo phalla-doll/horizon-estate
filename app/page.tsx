@@ -4,7 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import {
   ChevronDown,
-  Search,
   MapPin,
   Bed,
   Bath,
@@ -542,7 +541,7 @@ export default function Home() {
           
           <div className="relative w-full aspect-[21/9] rounded-2xl overflow-hidden">
             <Image
-              src="https://picsum.photos/seed/hero/1920/800"
+              src="/image/pexels-expect-best-79873-323780.jpg"
               alt="Modern luxury home"
               fill
               className="object-cover"
@@ -816,7 +815,7 @@ export default function Home() {
             {/* Agent 1 */}
             <div className="bg-white rounded-2xl p-4 shadow-sm">
               <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-4 bg-zinc-100">
-                <Image src="https://picsum.photos/seed/agent1/400/500" alt="Olivia Barnes" fill className="object-cover" referrerPolicy="no-referrer" />
+                <Image src="/agent-01.avif" alt="Olivia Barnes" fill className="object-cover" />
                 <div className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-wider bg-white/80 backdrop-blur-sm px-2 py-1 rounded">Horizon<br/>Estate</div>
               </div>
               <h4 className="font-medium text-lg">Olivia Barnes</h4>
@@ -838,7 +837,7 @@ export default function Home() {
             {/* Agent 2 */}
             <div className="bg-white rounded-2xl p-4 shadow-sm">
               <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-4 bg-zinc-100">
-                <Image src="https://picsum.photos/seed/agent2/400/500" alt="Carlos Garcia" fill className="object-cover" referrerPolicy="no-referrer" />
+                <Image src="/agent-02.avif" alt="Carlos Garcia" fill className="object-cover" />
                 <div className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-wider bg-white/80 backdrop-blur-sm px-2 py-1 rounded">Horizon<br/>Estate</div>
               </div>
               <h4 className="font-medium text-lg">Carlos Garcia</h4>
@@ -866,7 +865,7 @@ export default function Home() {
             {/* Agent 3 */}
             <div className="bg-white rounded-2xl p-4 shadow-sm">
               <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-4 bg-zinc-100">
-                <Image src="https://picsum.photos/seed/agent3/400/500" alt="Avi Chen" fill className="object-cover" referrerPolicy="no-referrer" />
+                <Image src="/agent-03.avif" alt="Avi Chen" fill className="object-cover" />
                 <div className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-wider bg-white/80 backdrop-blur-sm px-2 py-1 rounded">Horizon<br/>Estate</div>
               </div>
               <h4 className="font-medium text-lg">Avi Chen</h4>
@@ -894,7 +893,7 @@ export default function Home() {
             {/* Agent 4 */}
             <div className="bg-white rounded-2xl p-4 shadow-sm">
               <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-4 bg-zinc-100">
-                <Image src="https://picsum.photos/seed/agent4/400/500" alt="Marcus Lee" fill className="object-cover" referrerPolicy="no-referrer" />
+                <Image src="/agent-04.avif" alt="Marcus Lee" fill className="object-cover" />
                 <div className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-wider bg-white/80 backdrop-blur-sm px-2 py-1 rounded">Horizon<br/>Estate</div>
               </div>
               <h4 className="font-medium text-lg">Marcus Lee</h4>
