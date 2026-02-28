@@ -11,7 +11,7 @@ interface PropertyGridProps {
 
 export function PropertyGrid({ properties, onContactClick }: PropertyGridProps) {
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <section className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
         <h3 className="text-2xl font-medium">New properties</h3>
         <div className="relative">
@@ -24,7 +24,7 @@ export function PropertyGrid({ properties, onContactClick }: PropertyGridProps) 
           <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {properties.map(property => (
           <PropertyCard
             key={property.id}
